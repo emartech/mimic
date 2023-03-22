@@ -13,6 +13,6 @@ protocol MimickedFunction {
     var function: ((_ invocationCount: Int, _ params: Params<Any>) throws -> (ReturnType))! { get }
     var invocationCount: Int { get set }
     
-    func invoke(_ params: Any...) throws -> ReturnType
+    func invoke(_ fnName: String, params: Any...) throws -> ReturnType
     
 }

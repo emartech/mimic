@@ -12,7 +12,8 @@ class Fn<ReturnType>: MimickedFunction {
     
     var invocationCount: Int = 0
     
-    func invoke(_ params: Any...) throws -> ReturnType {
+    func invoke(_ fnName: String = #function, params: Any...) throws -> ReturnType {
+        self.name = fnName
         invocationCount += 1
         return try function(invocationCount, Params(elements: params.map { $0 }))
     }
