@@ -6,15 +6,15 @@
 
 import Foundation
 
-struct Params<Element> {
+struct Params {
     
-    let elements: [Element]
+    let elements: [Wrapped<Any>]
 
     subscript<ElementType>(index: Int) -> ElementType {
         get {
-            let value = elements[index]
+            let value = elements[index].value
             guard let value = value as? ElementType else {
-                assertionFailure("Expected type: \(value.self) doesn't match with value type: \(ElementType.self)")
+                assertionFailure("Expected type: \(type(of: value)) doesn't match with value type: \(ElementType.self)")
                 return value as! ElementType
             }
             return value

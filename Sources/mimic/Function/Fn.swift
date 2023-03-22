@@ -8,14 +8,14 @@ import Foundation
 class Fn<ReturnType>: MimickedFunction {
     
     var name: String!
-    var function: ((_ invocationCount: Int, _ params: Params<Any>) throws -> (ReturnType))!
+    var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))!
     
     var invocationCount: Int = 0
     
     func invoke(_ fnName: String = #function, params: Any...) throws -> ReturnType {
         self.name = fnName
         invocationCount += 1
-        return try function(invocationCount, Params(elements: params.map { $0 }))
+        return try function(invocationCount, Params(elements: params.map { Wrapped(value: $0) }))
     }
     
 }
