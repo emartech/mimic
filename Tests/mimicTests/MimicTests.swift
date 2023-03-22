@@ -67,25 +67,28 @@ final class MimicTests: XCTestCase {
         XCTAssertNil(result)
     }
     
-    func testWhen_withArgs() {
+    func testWhen_withParams() {
         var returnedInvocationCount = 0;
         var returnedArg1: String!
         var returnedArg2: Int!
-        var returnedArg3: TestStruct!
+        var returnedArg3: Bool? = true
+        var returnedArg4: TestStruct!
         
         mimickedClass.when(\.fwa) { invocationCount, params in
             returnedInvocationCount = invocationCount
-            returnedArg1 = params[0] as? String
-            returnedArg2 = params[1] as? Int
-            returnedArg3 = params[2] as? TestStruct
+            returnedArg1 = params[0]
+            returnedArg2 = params[1]
+            returnedArg3 = params[2]
+            returnedArg4 = params[3]
         }
         
-        mimickedClass.functionWithArgs(arg1: "testArg", arg2: 42, arg3: testStruct)
+        mimickedClass.functionWithArgs(arg1: "testArg", arg2: 42, arg3: nil, arg4: testStruct)
         
         XCTAssertEqual(returnedInvocationCount, 1)
         XCTAssertEqual(returnedArg1, "testArg")
         XCTAssertEqual(returnedArg2, 42)
-        XCTAssertEqual(returnedArg3, testStruct)
+        XCTAssertNil(returnedArg3)
+        XCTAssertEqual(returnedArg4, testStruct)
     }
     
 }

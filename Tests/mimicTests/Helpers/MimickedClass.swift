@@ -21,8 +21,8 @@ final class MimickedClass: Mimic {
         try! fwor.invoke()
     }
     
-    func functionWithArgs(arg1: String, arg2: Int, arg3: TestStruct) {
-        try! fwa.invoke(arg1, arg2, arg3)
+    func functionWithArgs(arg1: String, arg2: Int, arg3: Bool?, arg4: TestStruct) {
+        try! fwa.invoke(arg1, arg2, arg3 as Any, arg4)
     }
     
 }
