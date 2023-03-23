@@ -13,12 +13,12 @@ final class MimickedClass: Mimic {
     let fwor = Fn<String?>()
     let fwa = Fn<()>()
     
-    func functionWithoutResult() {
-        try! fwr.invoke()
+    func functionWithoutResult() throws {
+        try fwr.invoke()
     }
     
-    func functionWithOptionalResult() -> String? {
-        try! fwor.invoke()
+    func functionWithOptionalResult() throws -> String? {
+        try fwor.invoke()
     }
     
     func functionWithArgs(arg1: String, arg2: Int, arg3: Bool?, arg4: TestStruct) {

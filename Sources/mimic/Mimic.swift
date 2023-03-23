@@ -7,18 +7,18 @@
 import Foundation
 
 protocol Mimic: Equatable {
-    
-    func when<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>, replaceFunction: @escaping (_ invocationCount: Int, _ params: Params) throws -> (ReturnType))
 
+    func when<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> When<ReturnType>
+    
     func props() -> Props
     
 }
 
 extension Mimic {
-    
-    func when<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>, replaceFunction: @escaping (_ invocationCount: Int, _ params: Params) throws -> (ReturnType)) {
+
+    func when<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> When<ReturnType> {
         let mimicked = self[keyPath: fnKeyPath]
-        mimicked.function = replaceFunction
+        return mimicked.when()
     }
     
     func props() -> Props {
