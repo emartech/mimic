@@ -6,7 +6,7 @@
 
 import Foundation
 
-struct Wrapped<Element> {
+struct Value<Element>: ValueContainer {
     
     let value: Element
     

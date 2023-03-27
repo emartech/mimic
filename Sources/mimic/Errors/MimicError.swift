@@ -9,4 +9,6 @@ import Foundation
 enum MimicError: Error {
     case incompleteMimicking
     case missingResult
+    case missingMatcher
+    case argumentMismatch
 }

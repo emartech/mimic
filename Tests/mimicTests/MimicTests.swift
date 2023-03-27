@@ -108,13 +108,13 @@ final class MimicTests: XCTestCase {
         
         XCTAssertNil(result)
     }
-
+    
     func testWhen_withReturns() throws {
         let expected1 = "I'll be back."
         let expected2 = "Houston, we have a problem."
         let expected4 = "A martini. Shaken, not stirred."
         
-        mimickedClass.when(\.fwor).thenReturn(expected1, expected2, nil, expected4)
+        mimickedClass.when(\.fwor).thenReturns(expected1, expected2, nil, expected4)
         
         let result1 = try mimickedClass.functionWithOptionalResult()
         let result2 = try mimickedClass.functionWithOptionalResult()
@@ -132,7 +132,7 @@ final class MimicTests: XCTestCase {
         let expected2 = "Hasta la vista, baby."
         let expected3 = "So you're telling me there's a chance?"
         
-        mimickedClass.when(\.fwor).thenReturn(expected1, expected2, expected3)
+        mimickedClass.when(\.fwor).thenReturns(expected1, expected2, expected3)
         
         let result1 = try mimickedClass.functionWithOptionalResult()
         let result2 = try mimickedClass.functionWithOptionalResult()
@@ -146,10 +146,147 @@ final class MimicTests: XCTestCase {
         XCTAssertEqual(result3, expected3)
     }
     
-    func testWhen_withoutUsinganythingOnWhen_expectingIncompleteMimickingError() {
+    func testWhen_withoutUsingAnyFunctionOnWhen_expectingIncompleteMimickingError() {
         XCTAssertThrowsError(try mimickedClass.functionWithoutResult()) { error in
-            XCTAssertEqual(error as! MimicError, MimicError.incompleteMimicking)
+            XCTAssertEqual(error as! MimicError, .incompleteMimicking)
         }
+    }
+    
+    func testWhen_calledWith_eqMatcher_shouldThrowArgumentMismatchError_forThenReturn() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.eq("expectedValue")).thenReturn("result")
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_nilMatcher_shouldThrowArgumentMismatchError_forThenReturn() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.nil).thenReturn("result")
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_notNilMatcher_shouldThrowArgumentMismatchError_forThenReturn() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.notNil).thenReturn("result")
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: nil)) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_closureMatcher_shouldUseClosure_forThenReturn() async throws {
+        let closure: (MimickedClass.ErrorClosure) -> () = { errorClosure in
+            errorClosure(TestError.magicWord)
+        }
+  
+        mimickedClass.when(\.fwcar).calledWith(Arg.invokeClosure(closure)).thenReturn("result")
+        
+        var returnedError: Error? = nil
+        let result = try await mimickedClass.functionWithCArg { error in
+            returnedError = error
+        }
+        
+        XCTAssertEqual(result, "result")
+        XCTAssertEqual(returnedError as! TestError, TestError.magicWord)
+    }
+    
+    func testWhen_calledWith_eqMatcher_shouldThrowArgumentMismatchError_forThenReturns() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.eq("expectedValue")).thenReturns("result")
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_nilMatcher_shouldThrowArgumentMismatchError_forThenReturns() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.nil).thenReturns("result")
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_notNilMatcher_shouldThrowArgumentMismatchError_forThenReturns() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.notNil).thenReturns("result")
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: nil)) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_closureMatcher_shouldUseClosure_forThenReturns() async throws {
+        let closure: (MimickedClass.ErrorClosure) -> () = { errorClosure in
+            errorClosure(TestError.magicWord)
+        }
+  
+        mimickedClass.when(\.fwcar).calledWith(Arg.invokeClosure(closure)).thenReturns("result")
+        
+        var returnedError: Error? = nil
+        let result = try await mimickedClass.functionWithCArg { error in
+            returnedError = error
+        }
+        
+        XCTAssertEqual(result, "result")
+        XCTAssertEqual(returnedError as! TestError, TestError.magicWord)
+    }
+    
+    func testWhen_calledWith_eqMatcher_shouldThrowArgumentMismatchError_forReplaceFunction() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.eq("expectedValue")).replaceFunction { invocationCount, params in
+            return "result"
+        }
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_nilMatcher_shouldThrowArgumentMismatchError_forReplaceFunction() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.nil).replaceFunction { invocationCount, params in
+            return "result"
+        }
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_notNilMatcher_shouldThrowArgumentMismatchError_forReplaceFunction() {
+        
+        mimickedClass.when(\.fwar).calledWith(Arg.notNil).replaceFunction { invocationCount, params in
+            return "result"
+        }
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: nil)) { error in
+            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testWhen_calledWith_closureMatcher_shouldUseClosure_forReplaceFunction() async throws {
+        let closure: (MimickedClass.ErrorClosure) -> () = { errorClosure in
+            errorClosure(TestError.magicWord)
+        }
+  
+        mimickedClass.when(\.fwcar).calledWith(Arg.invokeClosure(closure)).replaceFunction { invocationCount, params in
+            return "result"
+        }
+        
+        var returnedError: Error? = nil
+        let result = try await mimickedClass.functionWithCArg { error in
+            returnedError = error
+        }
+        
+        XCTAssertEqual(result, "result")
+        XCTAssertEqual(returnedError as! TestError, TestError.magicWord)
     }
     
 }

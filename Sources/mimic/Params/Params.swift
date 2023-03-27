@@ -8,7 +8,7 @@ import Foundation
 
 struct Params {
     
-    let elements: [Wrapped<Any>]
+    let elements: [Value<Any>]
 
     subscript<ElementType>(index: Int) -> ElementType {
         get {

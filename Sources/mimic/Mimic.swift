@@ -18,7 +18,7 @@ extension Mimic {
 
     func when<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> When<ReturnType> {
         let mimicked = self[keyPath: fnKeyPath]
-        return mimicked.when()
+        return mimicked.when
     }
     
     func props() -> Props {

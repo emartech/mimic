@@ -9,8 +9,9 @@ class Fn<ReturnType>: MimickedFunction {
 
     var name: String!
     var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))?
-    
     var invocationCount: Int = 0
+    
+    lazy var when = When<ReturnType>(fn: self)
     
     func invoke(_ fnName: String = #function, params: Any...) throws -> ReturnType {
         guard let function = self.function else {
@@ -18,11 +19,7 @@ class Fn<ReturnType>: MimickedFunction {
         }
         self.name = fnName
         invocationCount += 1
-        return try function(invocationCount, Params(elements: params.map { Wrapped(value: $0) }))
+        return try function(invocationCount, Params(elements: params.map { Value(value: $0) }))
     }
-    
-    func when() -> When<ReturnType> {
-        return When<ReturnType>(fn: self)
-    }
-    
+
 }
