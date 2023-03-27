@@ -289,4 +289,12 @@ final class MimicTests: XCTestCase {
         XCTAssertEqual(returnedError as! TestError, TestError.magicWord)
     }
     
+    func testWhen_thenThrow() {
+        mimickedClass.when(\.fwr).thenThrow(error: TestError.magicWord)
+        
+        XCTAssertThrowsError(try mimickedClass.functionWithoutResult()) { error in
+            XCTAssertEqual(error as! TestError, .magicWord)
+        }
+    }
+    
 }

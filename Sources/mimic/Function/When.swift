@@ -37,6 +37,12 @@ class When<ReturnType> {
         }
     }
     
+    func thenThrow<ErrorType>(error: ErrorType) where ErrorType: Error {
+        fn.function = { _, _ in
+            throw error
+        }
+    }
+    
     func replaceFunction(_ replaceFunction: @escaping (_ invocationCount: Int, _ params: Params) throws -> (ReturnType)) {
         fn.function = { [unowned self] invocationCount, params in
             try self.validateParams(params)
