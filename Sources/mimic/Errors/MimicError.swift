@@ -11,4 +11,5 @@ enum MimicError: Error {
     case missingResult
     case missingMatcher
     case argumentMismatch
+    case verificationFailed
 }

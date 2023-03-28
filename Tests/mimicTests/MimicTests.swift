@@ -305,4 +305,56 @@ final class MimicTests: XCTestCase {
         }
     }
     
+    func testVerify_wasCalled_fail() throws {
+        mimickedClass.when(\.fwar).thenReturn("Frankly, my dear, I don't give a damn.")
+        
+        _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
+        
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).wasCalled(Arg.eq("Did he fire six shots or only five?"))) { error in
+            XCTAssertEqual(error as! MimicError, .argumentMismatch)
+        }
+    }
+    
+    func testVerify_times_zero() throws {
+        mimickedClass.when(\.fwar).thenReturn("Toto, I've a feeling we're not in Kansas anymore.")
+        
+        _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
+        
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).times(times: .zero)) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        }
+    }
+    
+    func testVerify_times_atLeast() throws {
+        mimickedClass.when(\.fwar).thenReturn("It's alive! It's alive!")
+        
+        _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
+        
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).times(times: .atLeast(2))) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        }
+    }
+    
+    func testVerify_times_atMax() throws {
+        mimickedClass.when(\.fwar).thenReturn("My precious.")
+        
+        _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
+        _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
+        
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).times(times: .max(1))) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        }
+    }
+    
+    func testVerify_times_atEq() throws {
+        mimickedClass.when(\.fwar).thenReturn("I feel the need—the need for speed!")
+        
+        
+        _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
+        
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).times(times: .eq(2))) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        }
+    }
+    
 }
