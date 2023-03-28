@@ -9,7 +9,7 @@ struct EqMatcher<Value>: Matcher {
     
     let value: Value
     
-    func evaluate<Argument>(arg: Argument?) throws {
+    func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
         
         guard let argument = arg as? Value else {

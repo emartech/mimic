@@ -8,6 +8,6 @@ import Foundation
 
 protocol Matcher: ValueContainer {
     
-    func evaluate<Argument>(arg: Argument?) throws
+    func evaluate<Argument>(arg: Argument) throws
     
 }

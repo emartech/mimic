@@ -9,12 +9,13 @@ struct NotNilMatcher: Matcher {
     
     let value: () = ()
     
-    func evaluate<Argument>(arg: Argument?) throws {
+    func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
         
-        if case Optional<Any>.some = arg {
+        if let optional = arg as? Optional<Argument>, optional == nil {
             throw MimicError.argumentMismatch
         }
+
     }
     
 }

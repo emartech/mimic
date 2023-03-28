@@ -152,6 +152,14 @@ final class MimicTests: XCTestCase {
         }
     }
     
+    func testWhen_calledWith_multipleMatchers() {
+        mimickedClass.when(\.fwa)
+            .calledWith(Arg.eq("expectedValue"), Arg.notNil, Arg.nil, Arg.eq(testStruct))
+            .thenReturn(())
+        
+        mimickedClass.functionWithArgs(arg1: "expectedValue", arg2: 42, arg3: nil, arg4: testStruct)
+    }
+    
     func testWhen_calledWith_eqMatcher_shouldThrowArgumentMismatchError_forThenReturn() {
         
         mimickedClass.when(\.fwar).calledWith(Arg.eq("expectedValue")).thenReturn("result")

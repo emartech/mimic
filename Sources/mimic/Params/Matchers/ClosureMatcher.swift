@@ -9,7 +9,7 @@ struct ClosureMatcher<ClosureType>: Matcher {
 
     let value: (ClosureType) -> ()
     
-    func evaluate<Argument>(arg: Argument?) throws {
+    func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
         
         guard let argument = arg as? ClosureType else {

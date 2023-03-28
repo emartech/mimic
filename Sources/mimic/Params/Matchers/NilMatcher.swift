@@ -9,9 +9,10 @@ struct NilMatcher: Matcher {
     
     let value: () = ()
     
-    func evaluate<Argument>(arg: Argument?) throws {
+    func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
-        guard case Optional<Any>.none = arg else {
+
+        if let optional = arg as? Optional<Argument>, optional != nil {
             throw MimicError.argumentMismatch
         }
     }

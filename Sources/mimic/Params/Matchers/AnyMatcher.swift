@@ -9,7 +9,7 @@ struct AnyMatcher: Matcher {
     
     let value: () = ()
     
-    func evaluate<Argument>(arg: Argument?) throws {
+    func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
     }
     
