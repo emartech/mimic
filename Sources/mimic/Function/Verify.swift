@@ -14,12 +14,27 @@ class Verify<ReturnType> {
     }
     
     func wasCalled(_ args: any Matcher...) throws -> Verify<ReturnType> {
-        guard let params = self.fn.logs.last?.args else {
+        guard let log = self.fn.logs.last else {
             throw MimicError.verificationFailed
         }
-        for (index, wrappedValue) in params.elements.enumerated() {
-            let matcher = args[index]
-            try matcher.evaluate(arg: wrappedValue.value)
+        if args.count > 0 {
+            guard let params = log.args else {
+                throw MimicError.verificationFailed
+            }
+            for (index, wrappedValue) in params.elements.enumerated() {
+                let matcher = args[index]
+                try matcher.evaluate(arg: wrappedValue.value)
+            }
+        }
+        return self
+    }
+    
+    func on(thread: Thread) throws -> Verify<ReturnType> {
+        guard let log = self.fn.logs.last else {
+            throw MimicError.verificationFailed
+        }
+        guard String(describing: thread) == log.thread else {
+            throw MimicError.verificationFailed
         }
         return self
     }

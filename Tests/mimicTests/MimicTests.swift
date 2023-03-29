@@ -315,6 +315,22 @@ final class MimicTests: XCTestCase {
         }
     }
     
+    func testVerify_onThread() async throws {
+        
+        @MainActor
+        func runOnMain() async throws {
+            _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
+        }
+        
+        mimickedClass.when(\.fwar).thenReturn("Chewie, we’re home.")
+        
+        try await runOnMain()
+        
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).on(thread: Thread.current)) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        }
+    }
+    
     func testVerify_times_zero() throws {
         mimickedClass.when(\.fwar).thenReturn("Toto, I've a feeling we're not in Kansas anymore.")
         
