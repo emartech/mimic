@@ -12,4 +12,5 @@ enum MimicError: Error {
     case missingMatcher
     case argumentMismatch
     case verificationFailed
+    case decodingFailed
 }
