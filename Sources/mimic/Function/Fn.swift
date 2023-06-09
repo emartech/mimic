@@ -5,7 +5,7 @@
 
 import Foundation
 
-class Fn<ReturnType>: MimickedFunction {
+public class Fn<ReturnType>: MimickedFunction {
 
     var name: String!
     var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))?

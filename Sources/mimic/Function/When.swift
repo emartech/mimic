@@ -5,7 +5,7 @@
 
 import Foundation
 
-class When<ReturnType> {
+public class When<ReturnType> {
     
     private var fn: Fn<ReturnType>
     private var matchers: [any Matcher]?

@@ -6,12 +6,12 @@
 import Foundation
 
 @propertyWrapper
-struct Generate<Item> where Item: Decodable {
+public struct Generate<Item> where Item: Decodable {
 
     let instanceGenerator = InstanceGenerator()
     var encodables: [Encodable]
     
-    var wrappedValue: Item {
+    public var wrappedValue: Item {
         get {
             return try! instanceGenerator.generate(encodables)
         }

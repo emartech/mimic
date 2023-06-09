@@ -5,7 +5,7 @@
 
 import Foundation
 
-class Verify<ReturnType> {
+public class Verify<ReturnType> {
     
     private var fn: Fn<ReturnType>
     

@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol Mimic: Equatable {
+public protocol Mimic: Equatable {
 
     func when<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> When<ReturnType>
     

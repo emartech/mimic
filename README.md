@@ -6,8 +6,7 @@ SPDX-License-Identifier: Apache-2.0
 
 ![Last commit build](https://github.com/emartech/mimic/actions/workflows/on_commit.yml/badge.svg)
 
-
-![](assets/mimic.png)
+<img src="assets/mimic.png" alt="Mimic" style="display: inline-block; margin: 0 auto; max-width: 150px">
 
 ## What is mimic?
 

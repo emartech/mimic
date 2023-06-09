@@ -5,7 +5,7 @@
 
 import Foundation
 
-class Props: Equatable {
+public class Props: Equatable {
     
     typealias Brace = (String, Any)
     
@@ -43,7 +43,7 @@ class Props: Equatable {
         }
     }
     
-    static func == (lhs: Props, rhs: Props) -> Bool {
+    public static func == (lhs: Props, rhs: Props) -> Bool {
         let ll = Set(lhs.labels)
         let rl = Set(rhs.labels)
         let lva = lhs.values.map({ String(describing: $0) })

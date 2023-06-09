@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct InstanceGenerator {
+public struct InstanceGenerator {
     
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()

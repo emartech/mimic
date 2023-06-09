@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum Times {
+public enum Times {
     case zero
     case eq(Int)
     case atLeast(Int)
