@@ -6,7 +6,8 @@ SPDX-License-Identifier: Apache-2.0
 
 ![Last commit build](https://github.com/emartech/mimic/actions/workflows/on_commit.yml/badge.svg)
 
-# mimic - testing solution for swift
+
+![](assets/mimic.png)
 
 ## What is mimic?
 
