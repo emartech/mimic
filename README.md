@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2023 Emarsys-Technologies Kft.
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 ![Last commit build](https://github.com/emartech/mimic/actions/workflows/on_commit.yml/badge.svg)
 
 # mimic - testing solution for swift
