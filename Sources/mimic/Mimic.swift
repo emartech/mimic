@@ -15,7 +15,7 @@ public protocol Mimic: Equatable {
     
 }
 
-extension Mimic {
+public extension Mimic {
 
     func when<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> When<ReturnType> {
         let mimicked = self[keyPath: fnKeyPath]

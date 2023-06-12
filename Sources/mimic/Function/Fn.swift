@@ -7,15 +7,15 @@ import Foundation
 
 public class Fn<ReturnType>: MimickedFunction {
 
-    var name: String!
-    var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))?
-    var invocationCount: Int = 0
-    var logs: [FnLogEntry<ReturnType>] = []
+    public var name: String!
+    public var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))?
+    public var invocationCount: Int = 0
+    public var logs: [FnLogEntry<ReturnType>] = []
     
     lazy var when = When<ReturnType>(fn: self)
     lazy var verify = Verify<ReturnType>(fn: self)
     
-    func invoke(_ fnName: String = #function, params: Any...) throws -> ReturnType {
+    public func invoke(_ fnName: String = #function, params: Any...) throws -> ReturnType {
         let log: FnLogEntry<ReturnType> = FnLogEntry()
         guard let function = self.function else {
             throw MimicError.incompleteMimicking

@@ -5,7 +5,7 @@
 
 import Foundation
 
-class FnLogEntry<ReturnType> {
+public class FnLogEntry<ReturnType> {
     let startTimestamp = Date()
     let thread = String(describing: Thread.current)
     let callStack = Thread.callStackSymbols

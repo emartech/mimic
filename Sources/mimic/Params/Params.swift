@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct Params {
+public struct Params {
     
     let elements: [Value<Any>]
 

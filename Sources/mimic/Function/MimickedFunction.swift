@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol MimickedFunction {
+public protocol MimickedFunction {
     
     associatedtype ReturnType
     
