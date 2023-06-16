@@ -9,7 +9,7 @@ public struct Params {
     
     let elements: [Value<Any>]
 
-    subscript<ElementType>(index: Int) -> ElementType {
+    public subscript<ElementType>(index: Int) -> ElementType {
         get {
             let value = elements[index].value
             guard let value = value as? ElementType else {
