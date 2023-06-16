@@ -6,6 +6,9 @@
 import Foundation
 
 public class Fn<ReturnType>: MimickedFunction {
+    
+    public init() {
+    }
 
     public var name: String!
     public var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))?
