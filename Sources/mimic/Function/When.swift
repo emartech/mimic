@@ -14,19 +14,19 @@ public class When<ReturnType> {
         self.fn = fn
     }
     
-    func calledWith(_ args: any Matcher...) -> When<ReturnType> {
+    public func calledWith(_ args: any Matcher...) -> When<ReturnType> {
         self.matchers = args.map { $0 }
         return self
     }
     
-    func thenReturn(_ result: ReturnType) {
+    public func thenReturn(_ result: ReturnType) {
         fn.function = { [unowned self] _, params in
             try self.validateParams(params)
             return result
         }
     }
     
-    func thenReturns(_ results: ReturnType...) {
+    public func thenReturns(_ results: ReturnType...) {
         fn.function = { [unowned self] invocationCount, params in
             try self.validateParams(params)
             guard invocationCount <= results.count else {
@@ -36,13 +36,13 @@ public class When<ReturnType> {
         }
     }
     
-    func thenThrow<ErrorType>(error: ErrorType) where ErrorType: Error {
+    public func thenThrow<ErrorType>(error: ErrorType) where ErrorType: Error {
         fn.function = { _, _ in
             throw error
         }
     }
     
-    func replaceFunction(_ replaceFunction: @escaping (_ invocationCount: Int, _ params: Params) throws -> (ReturnType)) {
+    public func replaceFunction(_ replaceFunction: @escaping (_ invocationCount: Int, _ params: Params) throws -> (ReturnType)) {
         fn.function = { [unowned self] invocationCount, params in
             try self.validateParams(params)
             return try replaceFunction(invocationCount, params)

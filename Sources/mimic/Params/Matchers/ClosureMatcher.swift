@@ -5,11 +5,11 @@
 
 import Foundation
 
-struct ClosureMatcher<ClosureType>: Matcher {
+public struct ClosureMatcher<ClosureType>: Matcher {
 
-    let value: (ClosureType) -> ()
+    public let value: (ClosureType) -> ()
     
-    func evaluate<Argument>(arg: Argument) throws {
+    public func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
         
         guard let argument = arg as? ClosureType else {

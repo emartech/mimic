@@ -5,19 +5,19 @@
 
 import Foundation
 
-struct Arg {
+public struct Arg {
     
-    static var `any` = AnyMatcher()
+    public static var `any` = AnyMatcher()
 
-    static var `nil` = NilMatcher()
+    public static var `nil` = NilMatcher()
 
-    static var notNil = NotNilMatcher()
+    public static var notNil = NotNilMatcher()
     
-    static func eq<ValueType>(_ value: ValueType) -> EqMatcher<ValueType> {
+    public static func eq<ValueType>(_ value: ValueType) -> EqMatcher<ValueType> {
         return EqMatcher(value: value)
     }
     
-    static func invokeClosure<ClosureType>(_ closure: @escaping (ClosureType) -> ()) -> ClosureMatcher<ClosureType> {
+    public static func invokeClosure<ClosureType>(_ closure: @escaping (ClosureType) -> ()) -> ClosureMatcher<ClosureType> {
         return ClosureMatcher(value: closure )
     }
     

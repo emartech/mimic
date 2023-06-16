@@ -5,11 +5,11 @@
 
 import Foundation
 
-struct AnyMatcher: Matcher {
+public struct AnyMatcher: Matcher {
     
-    let value: () = ()
+    public let value: () = ()
     
-    func evaluate<Argument>(arg: Argument) throws {
+    public func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
     }
     

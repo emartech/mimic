@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol Matcher: ValueContainer {
+public protocol Matcher: ValueContainer {
     
     func evaluate<Argument>(arg: Argument) throws
     

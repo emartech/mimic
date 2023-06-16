@@ -5,11 +5,11 @@
 
 import Foundation
 
-struct NotNilMatcher: Matcher {
+public struct NotNilMatcher: Matcher {
     
-    let value: () = ()
+    public let value: () = ()
     
-    func evaluate<Argument>(arg: Argument) throws {
+    public func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
         
         if let optional = arg as? Optional<Argument>, optional == nil {

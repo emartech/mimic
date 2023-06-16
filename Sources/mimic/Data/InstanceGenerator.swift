@@ -11,7 +11,7 @@ public struct InstanceGenerator {
     private let encoder = JSONEncoder()
     private let valueGeneratorFactory = ValueGeneratorFactory()
     
-    func generate<T>(_ encodables: [Encodable]) throws -> T where T: Decodable {
+    public func generate<T>(_ encodables: [Encodable]) throws -> T where T: Decodable {
         var result: T? = nil
         var structure = [String: Any]()
         repeat {

@@ -5,11 +5,11 @@
 
 import Foundation
 
-struct EqMatcher<Value>: Matcher {
+public struct EqMatcher<Value>: Matcher {
     
-    let value: Value
+    public let value: Value
     
-    func evaluate<Argument>(arg: Argument) throws {
+    public func evaluate<Argument>(arg: Argument) throws {
         // TODO: logging
         
         guard let argument = arg as? Value else {

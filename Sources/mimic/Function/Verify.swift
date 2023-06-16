@@ -13,7 +13,7 @@ public class Verify<ReturnType> {
         self.fn = fn
     }
     
-    func wasCalled(_ args: any Matcher...) throws -> Verify<ReturnType> {
+    public func wasCalled(_ args: any Matcher...) throws -> Verify<ReturnType> {
         guard let log = self.fn.logs.last else {
             throw MimicError.verificationFailed
         }
@@ -29,7 +29,7 @@ public class Verify<ReturnType> {
         return self
     }
     
-    func on(thread: Thread) throws -> Verify<ReturnType> {
+    public func on(thread: Thread) throws -> Verify<ReturnType> {
         guard let log = self.fn.logs.last else {
             throw MimicError.verificationFailed
         }
@@ -39,7 +39,7 @@ public class Verify<ReturnType> {
         return self
     }
     
-    func times(times: Times) throws -> Verify<ReturnType> {
+    public func times(times: Times) throws -> Verify<ReturnType> {
         switch times {
         case .zero:
             guard self.fn.logs.count == 0 else {

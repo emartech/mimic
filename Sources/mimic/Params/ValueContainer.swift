@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol ValueContainer {
+public protocol ValueContainer {
     
     associatedtype Value
     
