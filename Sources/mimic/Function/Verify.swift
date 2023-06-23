@@ -22,7 +22,7 @@ public class Verify<ReturnType> {
                 throw MimicError.verificationFailed
             }
             for (index, wrappedValue) in params.elements.enumerated() {
-                let matcher = args[index - 1]
+                let matcher = args[index]
                 try matcher.evaluate(arg: wrappedValue.value)
             }
         }
