@@ -52,7 +52,7 @@ public class When<ReturnType> {
     fileprivate func validateParams(_ params: Params) throws {
         if let matchers = self.matchers {
             for (index, wrappedValue) in params.elements.enumerated() {
-                let matcher = matchers[index]
+                let matcher = matchers[index - 1]
                 try matcher.evaluate(arg: wrappedValue.value)
             }
         }
