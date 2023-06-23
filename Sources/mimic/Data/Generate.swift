@@ -17,7 +17,7 @@ public struct Generate<Item> where Item: Decodable {
         }
     }
     
-    init(_ encodables: Encodable...) {
+    public init(_ encodables: Encodable...) {
         self.encodables = encodables
     }
 

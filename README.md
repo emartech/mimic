@@ -228,3 +228,12 @@ Limitations:
 This team is the maker of the [EmarsysSDK's](https://github.com/emartech/ios-emarsys-sdk) when we started to develop the swift based version of it, we shortly arrived that point when we needed a proper mocking solution. We tried out few, but non of them was fit perfectly to our needs mainly because of those points what are highlighted above. This package and it's features are actively used in our SDK. Our team strongly beliefs that the good things, findings, solutions, knowledge should be shared that's why we made this repo publicly available to anyone. 
 We hope you will consider it useful and will help your work.
 
+## No promises
+
+> `Disclaimer`
+>
+> As we mentioned before, at first place this package was created for internal use only. The main goal was to cover all of our use cases and fulfill our requirements what doesn't mean that this is good for everyone. If you find lack of features or issues we do not say that those will be implemented or solved in the near future since this product is not actively developed. We do our best, but no promises.
+
+## Logo
+
+The logo was created by [Bing Image Creator](https://www.bing.com/create)
