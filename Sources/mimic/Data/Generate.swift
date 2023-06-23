@@ -11,9 +11,15 @@ public struct Generate<Item> where Item: Decodable {
     let instanceGenerator = InstanceGenerator()
     var encodables: [Encodable]
     
+    var item: Item!
+    
     public var wrappedValue: Item {
-        get {
-            return try! instanceGenerator.generate(encodables)
+        mutating get {
+            item = try! instanceGenerator.generate(encodables)
+            return item
+        }
+        set {
+            item = newValue
         }
     }
     
