@@ -10,12 +10,13 @@ public struct Generate<Item> where Item: Decodable {
 
     let instanceGenerator = InstanceGenerator()
     var encodables: [Encodable]
+    var preedefined: [PartialKeyPath<Item>: Encodable]?
     
     var item: Item!
     
     public var wrappedValue: Item {
         mutating get {
-            item = try! instanceGenerator.generate(encodables)
+            item = try! instanceGenerator.generate(preedefined, encodables: encodables)
             return item
         }
         set {
@@ -23,7 +24,8 @@ public struct Generate<Item> where Item: Decodable {
         }
     }
     
-    public init(_ encodables: Encodable...) {
+    public init(_ predefined: [PartialKeyPath<Item>: Encodable]? = nil, encodables: Encodable...) {
+        self.preedefined = predefined
         self.encodables = encodables
     }
 
