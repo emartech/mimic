@@ -379,4 +379,14 @@ final class MimicTests: XCTestCase {
         }
     }
     
+    func testVerify_more_times() throws {
+        mimickedClass.when(\.fwar).thenReturn("Frankly, my dear, I don't give a damn.")
+        
+        _ = try mimickedClass.functionWithArg(arg: "Is this your king?")
+        _ = try mimickedClass.functionWithArg(arg: "Show me the money!")
+        
+        _ = try mimickedClass.verify(\.fwar).wasCalled(Arg.eq("Is this your king?"))
+        _ = try mimickedClass.verify(\.fwar).wasCalled(Arg.eq("Show me the money!"))
+    }
+    
 }

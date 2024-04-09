@@ -8,13 +8,15 @@ import Foundation
 public class Verify<ReturnType> {
     
     private var fn: Fn<ReturnType>
+    private var log: FnLogEntry<ReturnType>?
     
-    init(fn: Fn<ReturnType>) {
+    init(fn: Fn<ReturnType>, log: FnLogEntry<ReturnType>?) {
         self.fn = fn
+        self.log = log
     }
     
     public func wasCalled(_ args: any Matcher...) throws -> Verify<ReturnType> {
-        guard let log = self.fn.logs.last else {
+        guard let log = log else {
             throw MimicError.verificationFailed
         }
         if args.count > 0 {
@@ -30,7 +32,7 @@ public class Verify<ReturnType> {
     }
     
     public func on(thread: Thread) throws -> Verify<ReturnType> {
-        guard let log = self.fn.logs.last else {
+        guard let log = log else {
             throw MimicError.verificationFailed
         }
         guard String(describing: thread) == log.thread else {

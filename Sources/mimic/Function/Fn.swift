@@ -14,9 +14,20 @@ public class Fn<ReturnType>: MimickedFunction {
     public var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))?
     public var invocationCount: Int = 0
     public var logs: [FnLogEntry<ReturnType>] = []
+    private var verificationCount = 0
     
     lazy var when = When<ReturnType>(fn: self)
-    lazy var verify = Verify<ReturnType>(fn: self)
+    
+    var verify: Verify<ReturnType> {
+        get {
+            var log: FnLogEntry<ReturnType>? = nil
+            if verificationCount < logs.count {
+                log = logs[verificationCount]
+            }
+            verificationCount += 1
+            return Verify<ReturnType>(fn: self, log: log)
+        }
+    }
     
     public func invoke(_ fnName: String = #function, params: Any...) throws -> ReturnType {
         let log: FnLogEntry<ReturnType> = FnLogEntry()
