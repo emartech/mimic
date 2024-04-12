@@ -8,10 +8,16 @@ import Foundation
 extension String {
     
     func words() -> [String] {
-        let regex = try! Regex(#"\w+"#)
-        let matches = self.matches(of: regex).map { match in
-            return String(self[match.range])
+        var results = [String]()
+        let range = NSRange(location: 0, length: self.count)
+        let regex = try! NSRegularExpression(pattern: #"(\w+)"#)
+        let matches = regex.matches(in: self, options: [], range: range)
+        
+        for match in matches {
+            if let range = Range(match.range(at: 1), in: self) {
+                results.append(String(self[range]))
+            }
         }
-        return matches
+        return results
     }
 }

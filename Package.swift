@@ -12,7 +12,7 @@ let package = Package(
     name: "mimic",
     platforms: [
         .macOS(.v13),
-        .iOS(.v16)
+        .iOS(.v12)
     ],
     products: [
         .library(
