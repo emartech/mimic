@@ -31,15 +31,23 @@ public class Fn<ReturnType>: MimickedFunction {
     
     public func invoke(_ fnName: String = #function, params: Any...) throws -> ReturnType {
         let log: FnLogEntry<ReturnType> = FnLogEntry()
+        defer {
+            logs.append(log)
+        }
         guard let function = self.function else {
             throw MimicError.incompleteMimicking
         }
         self.name = fnName
         invocationCount += 1
         let params = Params(elements: params.map { Value(value: $0) })
-        let result = try function(invocationCount, params)
-        log.end(args: params, result: result)
-        logs.append(log)
+        var result: ReturnType
+        do {
+            result = try function(invocationCount, params)
+            log.end(args: params, result: result)
+        } catch {
+            log.end(args: params, result: nil)
+            throw error
+        }
         return result
     }
 
