@@ -13,7 +13,7 @@ final class MimickedClass: Mimic {
     let fwr = Fn<()>()
     let fwor = Fn<String?>()
     let fwa = Fn<()>()
-    let fwar = Fn<String>()
+    let fwar = Fn<String>("defaultResult")
     let fwcar = Fn<String>()
     
     func functionWithoutResult() throws {

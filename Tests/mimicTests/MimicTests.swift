@@ -441,4 +441,10 @@ final class MimicTests: XCTestCase {
             .times(times: .eq(1))
     }
     
+    func testDefaultReturnInit() throws {
+        let result = try mimickedClass.functionWithArg(arg: nil)
+        
+        XCTAssertEqual(result, "defaultResult")
+    }
+    
 }

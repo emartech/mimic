@@ -7,6 +7,11 @@ import Foundation
 
 public class Fn<ReturnType>: MimickedFunction {
     
+    convenience init(_ defaultReturn: ReturnType) {
+        self.init()
+        self.when.thenReturn(defaultReturn)
+    }
+    
     public init() {
     }
 
