@@ -42,18 +42,20 @@ public class When<ReturnType> {
         }
     }
     
-    public func replaceFunction(_ replaceFunction: @escaping (_ invocationCount: Int, _ params: Params) throws -> (ReturnType)) {
+    public func replaceFunction(_ replaceFunction: @escaping (_ invocationCount: Int, _ params: Params?) throws -> (ReturnType)) {
         fn.function = { [unowned self] invocationCount, params in
             try self.validateParams(params)
             return try replaceFunction(invocationCount, params)
         }
     }
     
-    fileprivate func validateParams(_ params: Params) throws {
-        if let matchers = self.matchers {
-            for (index, wrappedValue) in params.elements.enumerated() {
-                let matcher = matchers[index]
-                try matcher.evaluate(arg: wrappedValue.value)
+    fileprivate func validateParams(_ params: Params?) throws {
+        if let params {
+            if let matchers = self.matchers {
+                for (index, wrappedValue) in params.elements.enumerated() {
+                    let matcher = matchers[index]
+                    try matcher.evaluate(arg: wrappedValue.value)
+                }
             }
         }
     }

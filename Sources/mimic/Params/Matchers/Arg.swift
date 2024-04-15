@@ -13,7 +13,7 @@ public struct Arg {
 
     public static var notNil = NotNilMatcher()
     
-    public static func eq<ValueType>(_ value: ValueType) -> EqMatcher<ValueType> {
+    public static func eq<ValueType>(_ value: ValueType) -> EqMatcher<ValueType> where ValueType: Equatable {
         return EqMatcher(value: value)
     }
     

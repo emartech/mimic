@@ -6,7 +6,6 @@
 import XCTest
 @testable import mimic
 
-
 final class MimicTests: XCTestCase {
     
     let testStruct = TestStruct()
@@ -82,10 +81,10 @@ final class MimicTests: XCTestCase {
         
         mimickedClass.when(\.fwa).replaceFunction() { invocationCount, params in
             returnedInvocationCount = invocationCount
-            returnedArg1 = params[0]
-            returnedArg2 = params[1]
-            returnedArg3 = params[2]
-            returnedArg4 = params[3]
+            returnedArg1 = params?[0]
+            returnedArg2 = params?[1]
+            returnedArg3 = params?[2]
+            returnedArg4 = params?[3]
         }
         
         mimickedClass.functionWithArgs(arg1: "testArg", arg2: 42, arg3: nil, arg4: testStruct)
@@ -167,29 +166,35 @@ final class MimicTests: XCTestCase {
     }
     
     func testWhen_calledWith_eqMatcher_shouldThrowArgumentMismatchError_forThenReturn() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.eq("expectedValue")).thenReturn("result")
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.eq("expectedValue"))
+            .thenReturn("result")
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as! MimicError, .argumentMismatch(message: "Expected value: `expectedValue`, but was: `inputValue`"))
         }
     }
     
     func testWhen_calledWith_nilMatcher_shouldThrowArgumentMismatchError_forThenReturn() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.nil).thenReturn("result")
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.nil)
+            .thenReturn("result")
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as! MimicError, .argumentMismatch(message: "Expected argument is `nil`, but was: `inputValue`"))
         }
     }
     
     func testWhen_calledWith_notNilMatcher_shouldThrowArgumentMismatchError_forThenReturn() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.notNil).thenReturn("result")
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.notNil)
+            .thenReturn("result")
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: nil)) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as! MimicError, .argumentMismatch(message: "Argument must not be `nil`, but it was `nil`."))
         }
     }
     
@@ -210,29 +215,35 @@ final class MimicTests: XCTestCase {
     }
     
     func testWhen_calledWith_eqMatcher_shouldThrowArgumentMismatchError_forThenReturns() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.eq("expectedValue")).thenReturns("result")
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.eq("expectedValue"))
+            .thenReturns("result")
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as!MimicError, .argumentMismatch(message: "Expected value: `expectedValue`, but was: `inputValue`"))
         }
     }
     
     func testWhen_calledWith_nilMatcher_shouldThrowArgumentMismatchError_forThenReturns() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.nil).thenReturns("result")
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.nil)
+            .thenReturns("result")
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as!MimicError, .argumentMismatch(message: "Expected argument is `nil`, but was: `inputValue`"))
         }
     }
     
     func testWhen_calledWith_notNilMatcher_shouldThrowArgumentMismatchError_forThenReturns() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.notNil).thenReturns("result")
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.notNil)
+            .thenReturns("result")
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: nil)) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as!MimicError, .argumentMismatch(message: "Argument must not be `nil`, but it was `nil`."))
         }
     }
     
@@ -253,35 +264,41 @@ final class MimicTests: XCTestCase {
     }
     
     func testWhen_calledWith_eqMatcher_shouldThrowArgumentMismatchError_forReplaceFunction() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.eq("expectedValue")).replaceFunction { invocationCount, params in
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.eq("expectedValue"))
+            .replaceFunction { invocationCount, params in
             return "result"
         }
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as!MimicError, .argumentMismatch(message: "Expected value: `expectedValue`, but was: `inputValue`"))
         }
     }
     
     func testWhen_calledWith_nilMatcher_shouldThrowArgumentMismatchError_forReplaceFunction() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.nil).replaceFunction { invocationCount, params in
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.nil)
+            .replaceFunction { invocationCount, params in
             return "result"
         }
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: "inputValue")) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as!MimicError, .argumentMismatch(message: "Expected argument is `nil`, but was: `inputValue`"))
         }
     }
     
     func testWhen_calledWith_notNilMatcher_shouldThrowArgumentMismatchError_forReplaceFunction() {
-        
-        mimickedClass.when(\.fwar).calledWith(Arg.notNil).replaceFunction { invocationCount, params in
+        mimickedClass
+            .when(\.fwar)
+            .calledWith(Arg.notNil)
+            .replaceFunction { invocationCount, params in
             return "result"
         }
         
         XCTAssertThrowsError(try mimickedClass.functionWithArg(arg: nil)) { error in
-            XCTAssertEqual(error as!MimicError, .argumentMismatch)
+            XCTAssertEqual(error as!MimicError, .argumentMismatch(message: "Argument must not be `nil`, but it was `nil`."))
         }
     }
     
@@ -326,38 +343,49 @@ final class MimicTests: XCTestCase {
     }
     
     func testVerify_wasCalled_fail() throws {
-        mimickedClass.when(\.fwar).thenReturn("Frankly, my dear, I don't give a damn.")
+        mimickedClass
+            .when(\.fwar)
+            .thenReturn("Frankly, my dear, I don't give a damn.")
         
         _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
         
-        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).wasCalled(Arg.eq("Did he fire six shots or only five?"))) { error in
-            XCTAssertEqual(error as! MimicError, .argumentMismatch)
+        XCTAssertThrowsError(try mimickedClass
+            .verify(\.fwar)
+            .wasCalled(Arg.eq("Did he fire six shots or only five?"))) { error in
+            XCTAssertEqual(error as! MimicError, .argumentMismatch(message: "Expected value: `Did he fire six shots or only five?`, but was: `Oh, well.. That was unexpected.`"))
         }
     }
     
     func testVerify_onThread() async throws {
+        var expectedThreadName = String(describing: Thread.current)
+        var butWasThreadName: String?
         
         @MainActor
         func runOnMain() async throws {
+            butWasThreadName = String(describing: Thread.current)
             _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
         }
         
-        mimickedClass.when(\.fwar).thenReturn("Chewie, we’re home.")
+        mimickedClass
+            .when(\.fwar)
+            .thenReturn("Chewie, we’re home.")
         
         try await runOnMain()
         
         XCTAssertThrowsError(try mimickedClass.verify(\.fwar).on(thread: Thread.current)) { error in
-            XCTAssertEqual(error as! MimicError, .verificationFailed)
+            XCTAssertEqual(error as! MimicError, .verificationFailed(message: "Expected thread: `\(expectedThreadName)`, but was: `\(butWasThreadName!)`"))
         }
     }
     
     func testVerify_times_zero() throws {
-        mimickedClass.when(\.fwar).thenReturn("Toto, I've a feeling we're not in Kansas anymore.")
+        mimickedClass
+            .when(\.fwar)
+            .thenReturn("Toto, I've a feeling we're not in Kansas anymore.")
         
         _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
         
-        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).times(times: .zero)) { error in
-            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).wasCalled(Arg.any).times(times: .zero)) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed(message: "Expected `zero` invocation on function(\(String(describing: mimickedClass.fwar.name!)), but was: `1`"))
         }
     }
     
@@ -366,8 +394,8 @@ final class MimicTests: XCTestCase {
         
         _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
         
-        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).times(times: .atLeast(2))) { error in
-            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).wasCalled(Arg.any).times(times: .atLeast(2))) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed(message: "Expected `atLeast(2)` invocation on function(\(String(describing: mimickedClass.fwar.name!)), but was: `1`"))
         }
     }
     
@@ -377,30 +405,40 @@ final class MimicTests: XCTestCase {
         _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
         _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
         
-        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).times(times: .max(1))) { error in
-            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).wasCalled(Arg.any).times(times: .max(1))) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed(message: "Expected `max(1)` invocation on function(\(String(describing: mimickedClass.fwar.name!)), but was: `2`"))
         }
     }
     
     func testVerify_times_atEq() throws {
         mimickedClass.when(\.fwar).thenReturn("I feel the need—the need for speed!")
         
-        
         _ = try mimickedClass.functionWithArg(arg: "Oh, well.. That was unexpected.")
         
-        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).times(times: .eq(2))) { error in
-            XCTAssertEqual(error as! MimicError, .verificationFailed)
+        XCTAssertThrowsError(try mimickedClass.verify(\.fwar).wasCalled(Arg.any).times(times: .eq(2))) { error in
+            XCTAssertEqual(error as! MimicError, .verificationFailed(message: "Expected `exactly(2)` invocation on function(\(String(describing: mimickedClass.fwar.name!)), but was: `1`"))
         }
     }
     
     func testVerify_more_times() throws {
-        mimickedClass.when(\.fwar).thenReturn("Frankly, my dear, I don't give a damn.")
+        mimickedClass
+            .when(\.fwar)
+            .thenReturn("Frankly, my dear, I don't give a damn.")
         
         _ = try mimickedClass.functionWithArg(arg: "Is this your king?")
+        _ = try mimickedClass.functionWithArg(arg: "Is this your king?")
+        
+        _ = try mimickedClass
+            .verify(\.fwar)
+            .wasCalled(Arg.eq("Is this your king?"))
+            .times(times: .eq(2))
+        
         _ = try mimickedClass.functionWithArg(arg: "Show me the money!")
         
-        _ = try mimickedClass.verify(\.fwar).wasCalled(Arg.eq("Is this your king?"))
-        _ = try mimickedClass.verify(\.fwar).wasCalled(Arg.eq("Show me the money!"))
+        _ = try mimickedClass
+            .verify(\.fwar)
+            .wasCalled(Arg.eq("Show me the money!"))
+            .times(times: .eq(1))
     }
     
 }

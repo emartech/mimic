@@ -5,6 +5,12 @@
 
 import Foundation
 
+protocol TimesVerifiable {
+    
+    func times(times: Times) throws -> Self
+    
+}
+
 public enum Times {
     case zero
     case eq(Int)

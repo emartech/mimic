@@ -10,7 +10,7 @@ public protocol MimickedFunction {
     associatedtype ReturnType
     
     var name: String! { get }
-    var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))? { get set }
+    var function: ((_ invocationCount: Int, _ params: Params?) throws -> (ReturnType))? { get set }
     var invocationCount: Int { get set }
     
     func invoke(_ fnName: String, params: Any...) throws -> ReturnType

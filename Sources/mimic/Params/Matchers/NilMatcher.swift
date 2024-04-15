@@ -10,10 +10,8 @@ public struct NilMatcher: Matcher {
     public let value: () = ()
     
     public func evaluate<Argument>(arg: Argument) throws {
-        // TODO: logging
-
         if let optional = arg as? Optional<Argument>, optional != nil {
-            throw MimicError.argumentMismatch
+            throw MimicError.argumentMismatch(message: "Expected argument is `nil`, but was: `\(optional!)`")
         }
     }
     

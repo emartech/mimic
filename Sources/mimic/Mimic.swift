@@ -9,7 +9,7 @@ public protocol Mimic: Equatable {
 
     func when<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> When<ReturnType>
     
-    func verify<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> Verify<ReturnType>
+    func verify<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> Verifier<ReturnType>
     
     func props() -> Props
     
@@ -22,7 +22,7 @@ public extension Mimic {
         return mimicked.when
     }
     
-    func verify<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> Verify<ReturnType> {
+    func verify<ReturnType>(_ fnKeyPath: KeyPath<Self, Fn<ReturnType>>) -> Verifier<ReturnType> {
         let mimicked = self[keyPath: fnKeyPath]
         return mimicked.verify
     }

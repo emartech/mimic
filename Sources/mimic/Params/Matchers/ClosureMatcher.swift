@@ -13,7 +13,7 @@ public struct ClosureMatcher<ClosureType>: Matcher {
         // TODO: logging
         
         guard let argument = arg as? ClosureType else {
-            assertionFailure("Expected type: \(ClosureType.self) doesn't match with value type: \(Argument.self)")
+            assertionFailure("Expected type: \(ClosureType.self) doesn't match with type: \(Argument.self)")
             return
         }
         

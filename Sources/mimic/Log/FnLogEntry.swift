@@ -10,11 +10,11 @@ public class FnLogEntry<ReturnType> {
     let thread = String(describing: Thread.current)
     let callStack = Thread.callStackSymbols
     
-    var args: Params!
+    var args: Params?
     var result: ReturnType?
     var endTimestamp: Date!
     
-    func end(args: Params, result: ReturnType?) {
+    func end(args: Params?, result: ReturnType?) {
         self.args = args
         self.result = result
         self.endTimestamp = Date()

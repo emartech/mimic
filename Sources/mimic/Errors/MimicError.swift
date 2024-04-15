@@ -5,11 +5,12 @@
 
 import Foundation
 
-enum MimicError: Error {
+enum MimicError: Error, Equatable {
     case incompleteMimicking
     case missingResult
     case missingMatcher
-    case argumentMismatch
-    case verificationFailed
+    case argumentMismatch(message: String)
+    case verificationFailed(message: String)
     case decodingFailed
+    case zeroInteractions(functionName: String)
 }

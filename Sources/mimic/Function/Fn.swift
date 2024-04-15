@@ -11,23 +11,13 @@ public class Fn<ReturnType>: MimickedFunction {
     }
 
     public var name: String!
-    public var function: ((_ invocationCount: Int, _ params: Params) throws -> (ReturnType))?
+    public var function: ((_ invocationCount: Int, _ params: Params?) throws -> (ReturnType))?
     public var invocationCount: Int = 0
     public var logs: [FnLogEntry<ReturnType>] = []
-    private var verificationCount = 0
     
     lazy var when = When<ReturnType>(fn: self)
     
-    var verify: Verify<ReturnType> {
-        get {
-            var log: FnLogEntry<ReturnType>? = nil
-            if verificationCount < logs.count {
-                log = logs[verificationCount]
-            }
-            verificationCount += 1
-            return Verify<ReturnType>(fn: self, log: log)
-        }
-    }
+    lazy var verify: Verifier<ReturnType> = Verifier<ReturnType>(fn: self)
     
     public func invoke(_ fnName: String = #function, params: Any...) throws -> ReturnType {
         let log: FnLogEntry<ReturnType> = FnLogEntry()
@@ -39,13 +29,13 @@ public class Fn<ReturnType>: MimickedFunction {
         }
         self.name = fnName
         invocationCount += 1
-        let params = Params(elements: params.map { Value(value: $0) })
+        let fnParams = params.isEmpty ? nil : Params(elements: params.map { Value(value: $0) })
         var result: ReturnType
         do {
-            result = try function(invocationCount, params)
-            log.end(args: params, result: result)
+            result = try function(invocationCount, fnParams)
+            log.end(args: fnParams, result: result)
         } catch {
-            log.end(args: params, result: nil)
+            log.end(args: fnParams, result: nil)
             throw error
         }
         return result
