@@ -5,10 +5,11 @@
 
 import Foundation
 
-extension PartialKeyPath {
+protocol Factory {
     
-    var propertyName: String {
-        String(describing: self).words().last!
-    }
+    associatedtype Value
+    associatedtype ResultType
+    
+    func create(_ create: Value) throws -> ResultType
     
 }

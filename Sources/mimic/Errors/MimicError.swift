@@ -11,6 +11,6 @@ enum MimicError: Error, Equatable {
     case missingMatcher
     case argumentMismatch(message: String)
     case verificationFailed(message: String)
-    case decodingFailed
+    case decodingFailed(message: String)
     case zeroInteractions(functionName: String)
 }

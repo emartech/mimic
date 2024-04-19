@@ -39,7 +39,7 @@ final class InstanceGeneratorTests: XCTestCase {
         
         let instanceGenerator = InstanceGenerator()
         
-        someStructTest = try instanceGenerator.generate(predefined, encodables: [SomeEnum.case1("someText", 42)])
+        someStructTest = try instanceGenerator.generate(predefined, [SomeEnum.case1("someText", 42)])
         
         XCTAssertEqual(someStructTest.text, expectedText)
         XCTAssertEqual(someStructTest.bool, expectedBool)
